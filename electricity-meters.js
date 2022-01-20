@@ -10,12 +10,14 @@ module.exports = function(pool) {
 	// for a given street show all the meters and their balances
 	async function streetMeters(streetId) {
 var result= await pool.query('select meter_number,balance from electricity_meter where street_id=$1 ',[streetId]);
+
 return result.rows
 	}
 
 	// return all the appliances
 	async function appliances() {
 var result = await pool.query('select name,rate from appliance');
+
 return result.rows
 	}
 
@@ -26,12 +28,18 @@ return result.rows
 	
 	// return the data for a given balance
 	async	function meterData(meterId) {
-	
+	var result = await pool.query('select street_number,street_id,balance,meter_number,name from electricity_meter em join street st on em.street_id=st.id where street_id=$1',[meterId]);
+	return result.rows
 	}
 
 	// decrease the meter balance for the meterId supplied
 	async function useElectricity(meterId, units) {
-	
+
+	await pool.query('update electricity_meter set balance= balance - $2 where street_id=$1',[meterId,units]);
+	var result =await pool.query('select street_id,balance from electricity_meter where street_id=$1',[meterId]);
+	console.log(result.rows)
+	return result.rows
+
 	}
 
 	return {

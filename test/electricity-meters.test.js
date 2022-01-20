@@ -11,8 +11,19 @@ const pool = new Pool({
 
 describe("The Electricity meter", function() {
 
-	this.beforeAll(function() {
-		pool.query(`update electricity_meter set balance = 50`);
+	beforeEach(async function() {
+await pool.query('delete from electricity_meter')	;
+
+await pool.query(" insert into electricity_meter (street_number, street_id, balance,meter_number) values (1, 1, 50, 'ABC123')" );
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (6, 1, 50, 'DEF123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (8, 1, 50, 'GHI123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (12, 2, 50, 'JKL123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (7, 2, 50, 'MNO123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (5, 2, 50, 'PQR123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (11, 3, 50, 'STU123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (6, 3, 50, 'VWX123')");
+await pool.query("insert into electricity_meter (street_number, street_id, balance,meter_number) values (13, 3, 50, 'YZA123')");
+
 	});
 
 	it("should see all the streets", async function() {
@@ -75,8 +86,8 @@ describe("The Electricity meter", function() {
 		  ], appliances);
 
 	});
+/*
 
-	
 	it("should be able to topup electricity", async function() {
 
 		const electricityMeters = ElectricityMeters(pool);
@@ -86,13 +97,86 @@ describe("The Electricity meter", function() {
 
 	});
 
+	*/
+
+	it(' For a given meterId, return all the data for it ', async function(){
+		const electricityMeters = ElectricityMeters(pool);
+assert.deepStrictEqual([{
+    street_number: '1',
+    street_id: 1,
+    balance: '50.00',
+    meter_number: 'ABC123',
+    name: 'Miller Street'
+  },
+  {
+    street_number: '6',
+    street_id: 1,
+    balance: '50.00',
+    meter_number: 'DEF123',
+    name: 'Miller Street'
+  },
+  {
+    street_number: '8',
+    street_id: 1,
+    balance: '50.00',
+    meter_number: 'GHI123',
+    name: 'Miller Street'
+  }], await electricityMeters.meterData(1));
+assert.deepStrictEqual([{
+    street_number: '12',
+    street_id: 2,
+    balance: '50.00',
+    meter_number: 'JKL123',
+    name: 'Mathaba Crescent'
+  },
+  {
+    street_number: '7',
+    street_id: 2,
+    balance: '50.00',
+    meter_number: 'MNO123',
+    name: 'Mathaba Crescent'
+  },
+  {
+    street_number: '5',
+    street_id: 2,
+    balance: '50.00',
+    meter_number: 'PQR123',
+    name: 'Mathaba Crescent'
+  }], await electricityMeters.meterData(2));
+assert.deepStrictEqual([{
+    street_number: '11',
+    street_id: 3,
+    balance: '50.00',
+    meter_number: 'STU123',
+    name: 'Vilakazi Road'
+  },
+  {
+    street_number: '6',
+    street_id: 3,
+    balance: '50.00',
+    meter_number: 'VWX123',
+    name: 'Vilakazi Road'
+  },
+  {
+    street_number: '13',
+    street_id: 3,
+    balance: '50.00',
+    meter_number: 'YZA123',
+    name: 'Vilakazi Road'
+  }], await electricityMeters.meterData(3));
+
+	})
 	it("should be able to use electricity", async function() {
 
 		const electricityMeters = ElectricityMeters(pool);
 		const appliances = await electricityMeters.useElectricity(2, 20);
-		const meterData = await electricityMeters.meterData(2);
-		assert.deepStrictEqual(30, meterData.balance);
-
+		//const meterData = await electricityMeters.meterData(2);
+	//	assert.deepStrictEqual(30, meterData.balance);
+		assert.deepStrictEqual([
+			{ street_id: 2, balance: '30.00' },
+			{ street_id: 2, balance: '30.00' },
+			{ street_id: 2, balance: '30.00' }
+		  ],appliances )
 	});
 
 	this.afterAll(function() {
