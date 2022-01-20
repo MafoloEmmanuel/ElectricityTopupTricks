@@ -217,25 +217,20 @@ assert.deepStrictEqual([{
 
 		const electricityMeters = ElectricityMeters(pool);
 		const appliances = await electricityMeters.useElectricity(2, 20);
-		const appliance = await electricityMeters.useElectricity(1, 17);
 
 		//const meterData = await electricityMeters.meterData(2);
 	//	assert.deepStrictEqual(30, meterData.balance);
 		assert.deepStrictEqual([
-			{ street_id: 2, balance: '30.00' },
-			{ street_id: 2, balance: '30.00' },
-			{ street_id: 2, balance: '30.00' }
+			{  balance: '30.00' },
+			{  balance: '30.00' },
+			{  balance: '30.00' }
 		  ],appliances );
-		  assert.deepStrictEqual([
-			{ street_id: 1, balance: '33.00' },
-			{ street_id: 1, balance: '33.00' },
-			{ street_id: 1, balance: '33.00' }
-		  ],appliance )
+		
 	});
 	it('SHould see the meter with lowest balance', async function(){
 		const electricityMeters = ElectricityMeters(pool);
 		await electricityMeters.useElectricity(1, 17);
-		assert.deepStrictEqual([ { balance: '33.00', street_number: '8', name: 'Miller Street' } ], await electricityMeters.lowestBalanceMeter())
+		assert.deepStrictEqual([ { balance: '33.00', name: 'Miller Street' } ], await electricityMeters.lowestBalanceMeter())
 	});
 
 it('SHould see the name of street with highest total balance', async function(){

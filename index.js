@@ -66,6 +66,8 @@ app.get('/meter/:street_id', async function(req, res) {
 app.get('/meter/use/:meter_id', async function(req, res) {
 
 	// show the current meter balance and select the appliance you are using electricity for
+	const meters = await electricityMeters.useElectricity(meterId,units);
+
 	res.render('use_electicity', {
 		meters
 	});
@@ -78,7 +80,7 @@ app.post('/meter/use/:meter_id', async function(req, res) {
 	var units = req.body.units
 	const updateBalance = await electricityMeters.useElectricity(meterId,units);
 	await electricityMeters.meterData(meterId);
-	res.render(`/meter/user/${req.params.meter_id}`);
+	res.render(`/meter/user/${req.params.meter_id}`,{updateBalance});
 
 });
 

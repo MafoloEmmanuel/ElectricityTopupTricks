@@ -35,12 +35,12 @@ return result.rows
 	async function useElectricity(meterId, units) {
 
 	await pool.query('update electricity_meter set balance= balance - $2 where street_id=$1',[meterId,units]);
-	var result =await pool.query('select street_id,balance from electricity_meter where street_id=$1',[meterId]);
+	var result =await pool.query('select balance from electricity_meter where street_id=$1',[meterId]);
 	return result.rows
 
 	}
 async function lowestBalanceMeter(){
-	var result = await pool.query('select balance,street_number,name from electricity_meter em join street st on em.street_id=st.id  order by balance limit 1');
+	var result = await pool.query('select balance,name from electricity_meter em join street st on em.street_id=st.id  order by balance limit 1');
 	return result.rows;
 }
 
