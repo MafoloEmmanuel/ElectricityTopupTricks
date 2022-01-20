@@ -236,7 +236,7 @@ assert.deepStrictEqual([{
 it('SHould see the name of street with highest total balance', async function(){
 		const electricityMeters = ElectricityMeters(pool);
 		await electricityMeters.useElectricity(1, 17);
-		assert.deepStrictEqual([ { name: 'Mathaba Crescent', total_balance: '150.00' } ], await electricityMeters.highestBalanceStreet())
+		assert.deepStrictEqual([ { name: 'Vilakazi Road', total_balance: '150.00' } ], await electricityMeters.highestBalanceStreet())
 	});
 	this.afterAll(function() {
 		pool.end();
