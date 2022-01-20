@@ -7,12 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/streets" method="get">
     <div>
-      <button type="submit">Streets</button>
-    </div></form>
-    <form action="/appliances" method="get">
-    <button type="submit">Appliances</button>
-    </form>
+        <h4>All appliances</h4>
+        {{#each appliance}}
+        <ul>
+        <li>name: {{name}}</li>
+<li>rate: {{rate}}</li>
+        </ul>
+        {{/each}}
+    </div>
 </body>
 </html>

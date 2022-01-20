@@ -28,7 +28,7 @@ return result.rows
 	
 	// return the data for a given balance
 	async	function meterData(meterId) {
-	var result = await pool.query('select street_number,street_id,balance,meter_number,name from electricity_meter em join street st on em.street_id=st.id where street_id=$1',[meterId]);
+	var result = await pool.query('select street_number,street_id,balance,meter_number,name from electricity_meter em join street st on em.street_id=st.id where street_number=$1',[meterId]);
 	return result.rows
 	}
 
@@ -37,7 +37,6 @@ return result.rows
 
 	await pool.query('update electricity_meter set balance= balance - $2 where street_id=$1',[meterId,units]);
 	var result =await pool.query('select street_id,balance from electricity_meter where street_id=$1',[meterId]);
-	console.log(result.rows)
 	return result.rows
 
 	}

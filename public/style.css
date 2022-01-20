@@ -8,3 +8,6 @@ body {
 	margin: auto;
 	width: 40em;
 }
+ul{
+	list-style: none;
+}

@@ -8,10 +8,16 @@ const PORT =  process.env.PORT || 3017;
 
 const ElectricityMeters = require('./electricity-meters');
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://emmanuel:201735469@localhost:5432/topups_db';
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+    useSSL = { rejectUnauthorized: false };
+}
+const connectionString = process.env.DATABASE_URL || 'postgresql://tsheledi:201735469@localhost:5432/topups_db';
 
 const pool = new Pool({
-    connectionString  
+    connectionString :connectionString ,
+	ssl:useSSL
 });
 
 // enable the req.body object - to allow us to use HTML forms
@@ -29,7 +35,7 @@ app.set('view engine', 'handlebars');
 const electricityMeters = ElectricityMeters(pool);
 
 app.get('/', function(req, res) {
-	res.redirect('/streets');
+res.render('index');
 });
 
 app.get('/streets', async function(req, res) {
@@ -39,7 +45,10 @@ app.get('/streets', async function(req, res) {
 		streets
 	});
 });
-
+app.get('/appliances',async (req,res)=>{
+	const appliance = await electricityMeters.appliances()
+	res.render('appliances',{appliance});
+})
 app.get('/meter/:street_id', async function(req, res) {
 
 	// use the streetMeters method in the factory function...
