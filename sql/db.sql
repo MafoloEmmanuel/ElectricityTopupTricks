@@ -29,15 +29,15 @@ insert into street (name) values ('Miller Street');
 insert into street (name) values ('Mathaba Crescent');
 insert into street (name) values ('Vilakazi Road');
 
-insert into electricity_meter (street_number, street_id, balance) values (1, 1, 50);
-insert into electricity_meter (street_number, street_id, balance) values (6, 1, 50);
-insert into electricity_meter (street_number, street_id, balance) values (8, 1, 50);
-insert into electricity_meter (street_number, street_id, balance) values (12, 2, 50);
-insert into electricity_meter (street_number, street_id, balance) values (7, 2, 50);
-insert into electricity_meter (street_number, street_id, balance) values (5, 2, 50);
-insert into electricity_meter (street_number, street_id, balance) values (11, 3, 50);
-insert into electricity_meter (street_number, street_id, balance) values (6, 3, 50);
-insert into electricity_meter (street_number, street_id, balance) values (13, 3, 50);
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (1, 1, 50, 'ABC123' );
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (6, 1, 50, 'DEF123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (8, 1, 50, 'GHI123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (12, 2, 50, 'JKL123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (7, 2, 50, 'MNO123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (5, 2, 50, 'PQR123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (11, 3, 50, 'STU123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (6, 3, 50, 'VWX123');
+insert into electricity_meter (street_number, street_id, balance,meter_number) values (13, 3, 50, 'YZA123');
 
 insert into appliance (name, rate) values ('Stove', 4.5);
 insert into appliance (name, rate) values ('TV', 1.8);

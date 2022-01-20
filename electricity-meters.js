@@ -8,27 +8,29 @@ module.exports = function(pool) {
 	}
 
 	// for a given street show all the meters and their balances
-	function streetMeters(streetId) {
-
+	async function streetMeters(streetId) {
+var result= await pool.query('select meter_number,balance from electricity_meter where street_id=$1 ',[streetId]);
+return result.rows
 	}
 
 	// return all the appliances
-	function appliances() {
-
+	async function appliances() {
+var result = await pool.query('select name,rate from appliance');
+return result.rows
 	}
 
 	// increase the meter balance for the meterId supplied
-	function topupElectricity(meterId, units) {
+	async function topupElectricity(meterId, units) {
 
 	}
 	
 	// return the data for a given balance
-	function meterData(meterId) {
+	async	function meterData(meterId) {
 	
 	}
 
 	// decrease the meter balance for the meterId supplied
-	function useElectricity(meterId, units) {
+	async function useElectricity(meterId, units) {
 	
 	}
 

@@ -3,7 +3,7 @@ const pg = require('pg');
 const Pool = pg.Pool;
 const ElectricityMeters = require('../electricity-meters');
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://topup:topup00@localhost:5432/topups';
+const connectionString = process.env.DATABASE_URL || 'postgresql://tsheledi:201735469@localhost:5432/topups_db';
 
 const pool = new Pool({
     connectionString  
@@ -38,12 +38,26 @@ describe("The Electricity meter", function() {
 
 	});
 
-	it("should see all the appliances", async function() {
+	it("for a given street show all the meters and their balances", async function() {
 
 		const electricityMeters = ElectricityMeters(pool);
-		const appliances = await electricityMeters.appliances();
 		
-		assert.deepStrictEqual([], appliances);
+		assert.deepStrictEqual([
+			{ meter_number: 'ABC123', balance: '50.00' },
+			{ meter_number: 'DEF123', balance: '50.00' },
+			{ meter_number: 'GHI123', balance: '50.00' }
+		  ], await electricityMeters.streetMeters(1));
+		assert.deepStrictEqual([
+			{ meter_number: 'JKL123', balance: '50.00' },
+			{ meter_number: 'MNO123', balance: '50.00' },
+			{ meter_number: 'PQR123', balance: '50.00' }
+		  ], await electricityMeters.streetMeters(2));
+		assert.deepStrictEqual([
+			{ meter_number: 'STU123', balance: '50.00' },
+			{ meter_number: 'VWX123', balance: '50.00' },
+			{ meter_number: 'YZA123', balance: '50.00' }
+		  ], await electricityMeters.streetMeters(3));
+
 
 	});
 
@@ -52,10 +66,17 @@ describe("The Electricity meter", function() {
 		const electricityMeters = ElectricityMeters(pool);
 		const appliances = await electricityMeters.appliances();
 		
-		assert.deepStrictEqual([], appliances);
+		assert.deepStrictEqual([
+			{ name: 'Stove', rate: '4.50' },
+			{ name: 'TV', rate: '1.80' },
+			{ name: 'Heater', rate: '3.50' },
+			{ name: 'Fridge', rate: '4.00' },
+			{ name: 'Kettle', rate: '2.70' }
+		  ], appliances);
 
 	});
 
+	
 	it("should be able to topup electricity", async function() {
 
 		const electricityMeters = ElectricityMeters(pool);
