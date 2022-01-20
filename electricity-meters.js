@@ -10,7 +10,6 @@ module.exports = function(pool) {
 	// for a given street show all the meters and their balances
 	async function streetMeters(streetId) {
 var result= await pool.query('select name,street_number, meter_number,balance from electricity_meter em join street st on em.street_id=st.id where street_id=$1;',[streetId]);
-
 return result.rows
 	}
 
@@ -28,7 +27,7 @@ return result.rows
 	
 	// return the data for a given balance
 	async	function meterData(meterId) {
-	var result = await pool.query('select street_number,street_id,balance,meter_number,name from electricity_meter em join street st on em.street_id=st.id where street_number=$1',[meterId]);
+	var result = await pool.query('select street_number,street_id,balance,meter_number,name from electricity_meter em join street st on em.street_id=st.id where street_id=$1',[meterId]);
 	return result.rows
 	}
 
@@ -40,14 +39,24 @@ return result.rows
 	return result.rows
 
 	}
+async function lowestBalanceMeter(){
+	var result = await pool.query('select balance,street_number,name from electricity_meter em join street st on em.street_id=st.id  order by balance limit 1');
+	return result.rows;
+}
 
+async function highestBalanceStreet(){
+var result = await pool.query('select name,sum(balance) total_balance from electricity_meter em join street st on em.street_id=st.id group by balance,name order by total_balance desc limit 1');
+return result.rows
+}
 	return {
 		streets,
 		streetMeters,
 		appliances,
 		topupElectricity,
 		meterData,
-		useElectricity
+		useElectricity,
+		lowestBalanceMeter,
+		highestBalanceStreet
 	}
 
 

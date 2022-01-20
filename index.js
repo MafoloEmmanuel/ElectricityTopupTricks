@@ -74,6 +74,10 @@ app.get('/meter/use/:meter_id', async function(req, res) {
 app.post('/meter/use/:meter_id', async function(req, res) {
 
 	// update the meter balance with the usage of the appliance selected.
+	var meterId = req.params.meter_id;
+	var units = req.body.units
+	const updateBalance = await electricityMeters.useElectricity(meterId,units);
+	await electricityMeters.meterData(meterId);
 	res.render(`/meter/user/${req.params.meter_id}`);
 
 });

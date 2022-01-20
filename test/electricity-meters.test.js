@@ -54,19 +54,64 @@ await pool.query("insert into electricity_meter (street_number, street_id, balan
 		const electricityMeters = ElectricityMeters(pool);
 		
 		assert.deepStrictEqual([
-			{ meter_number: 'ABC123', balance: '50.00' },
-			{ meter_number: 'DEF123', balance: '50.00' },
-			{ meter_number: 'GHI123', balance: '50.00' }
+			{
+			  name: 'Miller Street',
+			  street_number: '1',
+			  meter_number: 'ABC123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Miller Street',
+			  street_number: '6',
+			  meter_number: 'DEF123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Miller Street',
+			  street_number: '8',
+			  meter_number: 'GHI123',
+			  balance: '50.00'
+			}
 		  ], await electricityMeters.streetMeters(1));
 		assert.deepStrictEqual([
-			{ meter_number: 'JKL123', balance: '50.00' },
-			{ meter_number: 'MNO123', balance: '50.00' },
-			{ meter_number: 'PQR123', balance: '50.00' }
+			{
+			  name: 'Mathaba Crescent',
+			  street_number: '12',
+			  meter_number: 'JKL123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Mathaba Crescent',
+			  street_number: '7',
+			  meter_number: 'MNO123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Mathaba Crescent',
+			  street_number: '5',
+			  meter_number: 'PQR123',
+			  balance: '50.00'
+			}
 		  ], await electricityMeters.streetMeters(2));
 		assert.deepStrictEqual([
-			{ meter_number: 'STU123', balance: '50.00' },
-			{ meter_number: 'VWX123', balance: '50.00' },
-			{ meter_number: 'YZA123', balance: '50.00' }
+			{
+			  name: 'Vilakazi Road',
+			  street_number: '11',
+			  meter_number: 'STU123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Vilakazi Road',
+			  street_number: '6',
+			  meter_number: 'VWX123',
+			  balance: '50.00'
+			},
+			{
+			  name: 'Vilakazi Road',
+			  street_number: '13',
+			  meter_number: 'YZA123',
+			  balance: '50.00'
+			}
 		  ], await electricityMeters.streetMeters(3));
 
 
@@ -107,6 +152,20 @@ assert.deepStrictEqual([
 	  street_id: 1,
 	  balance: '50.00',
 	  meter_number: 'ABC123',
+	  name: 'Miller Street'
+	},
+	{
+	  street_number: '6',
+	  street_id: 1,
+	  balance: '50.00',
+	  meter_number: 'DEF123',
+	  name: 'Miller Street'
+	},
+	{
+	  street_number: '8',
+	  street_id: 1,
+	  balance: '50.00',
+	  meter_number: 'GHI123',
 	  name: 'Miller Street'
 	}
   ], await electricityMeters.meterData(1));
@@ -158,15 +217,32 @@ assert.deepStrictEqual([{
 
 		const electricityMeters = ElectricityMeters(pool);
 		const appliances = await electricityMeters.useElectricity(2, 20);
+		const appliance = await electricityMeters.useElectricity(1, 17);
+
 		//const meterData = await electricityMeters.meterData(2);
 	//	assert.deepStrictEqual(30, meterData.balance);
 		assert.deepStrictEqual([
 			{ street_id: 2, balance: '30.00' },
 			{ street_id: 2, balance: '30.00' },
 			{ street_id: 2, balance: '30.00' }
-		  ],appliances )
+		  ],appliances );
+		  assert.deepStrictEqual([
+			{ street_id: 1, balance: '33.00' },
+			{ street_id: 1, balance: '33.00' },
+			{ street_id: 1, balance: '33.00' }
+		  ],appliance )
+	});
+	it('SHould see the meter with lowest balance', async function(){
+		const electricityMeters = ElectricityMeters(pool);
+		await electricityMeters.useElectricity(1, 17);
+		assert.deepStrictEqual([ { balance: '33.00', street_number: '8', name: 'Miller Street' } ], await electricityMeters.lowestBalanceMeter())
 	});
 
+it('SHould see the name of street with highest total balance', async function(){
+		const electricityMeters = ElectricityMeters(pool);
+		await electricityMeters.useElectricity(1, 17);
+		assert.deepStrictEqual([ { name: 'Mathaba Crescent', total_balance: '150.00' } ], await electricityMeters.highestBalanceStreet())
+	});
 	this.afterAll(function() {
 		pool.end();
 	});
