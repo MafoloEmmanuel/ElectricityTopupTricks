@@ -5,16 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-	<link rel="stylesheet" href="style.css">
-
+    <style>
+        body{
+            background-color: lightseagreen;
+        }
+    </style>
 </head>
-<body>
+<body >
     <div>
-        <h4>All appliances</h4>
-        {{#each appliance}}
+        <h4>Street Meters</h4>
+
+        {{#each meters}}
         <ul>
-        <li>name: {{name}}</li>
-<li>rate: {{rate}}</li>
+            <li>Street name:{{name}} </li>
+            <li>Street Number: {{street_number}}</li>
+            <li>Balance: {{balance}}</li>
         </ul>
         {{/each}}
     </div>

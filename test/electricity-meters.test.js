@@ -101,27 +101,15 @@ await pool.query("insert into electricity_meter (street_number, street_id, balan
 
 	it(' For a given meterId, return all the data for it ', async function(){
 		const electricityMeters = ElectricityMeters(pool);
-assert.deepStrictEqual([{
-    street_number: '1',
-    street_id: 1,
-    balance: '50.00',
-    meter_number: 'ABC123',
-    name: 'Miller Street'
-  },
-  {
-    street_number: '6',
-    street_id: 1,
-    balance: '50.00',
-    meter_number: 'DEF123',
-    name: 'Miller Street'
-  },
-  {
-    street_number: '8',
-    street_id: 1,
-    balance: '50.00',
-    meter_number: 'GHI123',
-    name: 'Miller Street'
-  }], await electricityMeters.meterData(1));
+assert.deepStrictEqual([
+	{
+	  street_number: '1',
+	  street_id: 1,
+	  balance: '50.00',
+	  meter_number: 'ABC123',
+	  name: 'Miller Street'
+	}
+  ], await electricityMeters.meterData(1));
 assert.deepStrictEqual([{
     street_number: '12',
     street_id: 2,
