@@ -1,6 +1,7 @@
 # ElectricityTopupTricks
 [![Build Status](https://app.travis-ci.com/MafoloEmmanuel/ElectricityTopupTricks.svg?branch=main)](https://app.travis-ci.com/MafoloEmmanuel/ElectricityTopupTricks)
 
+App can be found on heroku at https://electricity-topup-tricks.herokuapp.com/
 Create a web app, to help your local Municipality to track electricity usage per household. Each month the Municipality gives each household 50 units each for free. Households can topup if they need extra electricity.
 
 The factory function is missing some methods and queries. Please sort that out.
