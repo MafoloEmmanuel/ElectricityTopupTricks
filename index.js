@@ -13,7 +13,7 @@ let local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local) {
     useSSL = { rejectUnauthorized: false };
 }
-const connectionString = process.env.DATABASE_URL || 'postgresql://tsheledi:201735469@localhost:5432/topups_db';
+const connectionString = process.env.DATABASE_URL || 'postgresql://emmanuel:201735469@localhost:5432/coderdb';
 
 const pool = new Pool({
     connectionString :connectionString ,

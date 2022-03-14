@@ -7,21 +7,64 @@
     <title>Document</title>
     <style>
         body{
-            background-color: lightseagreen;
+            background-color: #4c334d;
+            color: white;
         }
+        table,th,td{
+            border: 2px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        table{
+            width:50%;
+
+        }
+        th{
+            font-weight: bolder;
+            font-size: larger;
+        }
+        h1,h4{
+            text-align: center;
+        }
+        .tables{
+	text-align: center;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+@media (max-width:920px){
+    table{
+        width:100%;
+    }
+}
     </style>
 </head>
 <body >
-    <div>
-        <h4>Street Meters</h4>
+        <h4>For this street we check for street number and the remaining balance</h4>
 
+    <div class="tables">
+
+        
+
+        <table>
+            <tr>
+                <th>Street Name</th>
+                <th>Street Number</th>
+                <th>Balance</th>
+
+            </tr>
         {{#each meters}}
-        <ul>
-            <li>Street name:{{name}} </li>
-            <li>Street Number: {{street_number}}</li>
-            <li>Balance: {{balance}}</li>
-        </ul>
+
+            <tr>
+                <td>{{name}}</td>
+                <td>{{street_number}}</td>
+                <td>{{balance}}</td>
+            </tr>
         {{/each}}
+        </table>
+
+
     </div>
 </body>
 </html>

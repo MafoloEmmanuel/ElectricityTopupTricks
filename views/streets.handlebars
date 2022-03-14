@@ -9,21 +9,16 @@
 
 </head>
 <body>
-    <h2>Streets</h2>
 <div>
-        <h4>List of all streets</h4>
+        <h3>List of all the streets</h3>
      
-<table>
 {{#each streets}}
-<tr>
-	<td>
-		{{name}}
-	</td>
-	<td>
-		<a href="/meter/{{id}}">Meters in street</a>
-	</td>
-</tr>
+
+<form action="/meter/{{id}}">
+<ul class="street">
+	<li> <button type="submit" >{{name}}</button></li>
+</ul>
+</form>
 {{/each}}
-</table>
 </body>
 </html>
